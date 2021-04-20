@@ -38,7 +38,15 @@ namespace Demo
 
         private static object[] DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
         {
-            
+            var objects = Array.Empty<object>();
+            int counter = 0;
+            foreach (var ctorInfo in ctorInfos)
+            {
+                var ctorParams = ctorInfo.GetParameters();
+                foreach (var ctorParam in ctorParams)
+                {
+                }
+            }
         }
 
         private static IShape InitializeShapeWithArguments(string shapeFullName, object[] ctorArgs)
@@ -59,7 +67,7 @@ namespace Demo
                 throw;
             }
         }
-        
+
         private static ShapeInfo ChooseShape(List<ShapeInfo> shapes)
         {
             while (true)
