@@ -20,7 +20,7 @@ namespace AreaCalculator
                 .ToList();
             foreach (var shape in shapes)
             {
-                result.Add(new ShapeInfo(shape.Name, shape.GetConstructors()));
+                result.Add(new ShapeInfo(shape.FullName, shape.Name, shape.GetConstructors()));
             }
 
             return result;

@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace AreaCalculatorTest
 {
-    public class Tests
+    public class RectangleTests
     {
         [SetUp]
         public void Setup()

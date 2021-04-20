@@ -9,9 +9,11 @@ namespace AreaCalculator
 
         public ShapeInfo Info()
         {
-            var shapeName = GetType().Name;
-            var ctors = GetType().GetConstructors();
-            return new ShapeInfo(shapeName, ctors);
+            return new ShapeInfo(
+                GetType().FullName,
+                GetType().Name,
+                GetType().GetConstructors()
+            );
         }
 
         public double Area();
