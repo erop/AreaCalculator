@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using AreaCalculator;
-using AreaCalculator.Shapes;
 
 namespace Demo
 {
@@ -21,10 +18,7 @@ namespace Demo
 
             DisplayGreeting();
             DisplayShapesAvailable(shapes);
-            if (!WantToProceed())
-            {
-                return;
-            }
+            if (!WantToProceed()) return;
 
             var shapeInfo = ChooseShape(shapes);
             CalculateAreaForChosenShape(shapeInfo);
@@ -36,27 +30,26 @@ namespace Demo
             var ctorInfos = chosenShape.ConstructorInfos;
             Console.WriteLine($"You choose {shapeName}");
             Console.WriteLine($"There are {ctorInfos.Length} variant(s) of parameters of the {shapeName}");
-            // var ctorArgs = DisplayAndSelectConstructorArguments(ctorInfos);
-            IShape shape = InitializeShapeWithArguments(chosenShape.FullName, ctorArgs);
+            var ctorArgs = DisplayAndSelectConstructorArguments(ctorInfos);
+            var shape = InitializeShapeWithArguments(chosenShape.FullName, ctorArgs);
             Console.WriteLine("Congratulations!!!");
             Console.WriteLine($"The area of the {shapeName} equals to {Calculator.Area(shape)}");
+        }
+
+        private static object DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
+        {
+            throw new NotImplementedException();
         }
 
         private static IShape InitializeShapeWithArguments(string shapeFullName, object ctorArgs)
         {
             var shapeType = Type.GetType(shapeFullName);
-            if (null == shapeType)
-            {
-                throw new ArgumentException($"Could not determine the type of '{shapeFullName}'");
-            }
+            if (null == shapeType) throw new ArgumentException($"Could not determine the type of '{shapeFullName}'");
 
             try
             {
                 var shape = Activator.CreateInstance(shapeType, ctorArgs);
-                if (null == shape)
-                {
-                    throw new Exception($"Could not instantiate and object of type '{shapeFullName}'");
-                }
+                if (null == shape) throw new Exception($"Could not instantiate and object of type '{shapeFullName}'");
 
                 return (IShape) shape;
             }
@@ -66,17 +59,7 @@ namespace Demo
                 throw;
             }
         }
-
-        // private static DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
-        // {
-        //     while (true)
-        //     {
-        //         foreach (var info in ctorInfos)
-        //         {
-        //         }
-        //     }
-        // }
-
+        
         private static ShapeInfo ChooseShape(List<ShapeInfo> shapes)
         {
             while (true)
@@ -90,7 +73,6 @@ namespace Demo
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    continue;
                 }
             }
         }
@@ -111,11 +93,8 @@ namespace Demo
         private static void DisplayShapesAvailable(List<ShapeInfo> shapes)
         {
             Console.WriteLine($"\nThere are {shapes.Count} shape(s) available:");
-            int counter = 0;
-            foreach (var shape in shapes)
-            {
-                Console.WriteLine($"{++counter} {shape.Name}");
-            }
+            var counter = 0;
+            foreach (var shape in shapes) Console.WriteLine($"{++counter} {shape.Name}");
         }
 
         private static void DisplayGreeting()
