@@ -13,17 +13,12 @@ namespace AreaCalculator
 
         public static List<ShapeInfo> GetAvailableShapes()
         {
-            var result = new List<ShapeInfo>();
             var shapes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
-                .Where(x => typeof(IShape).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                .Where(t => typeof(IShape).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
                 .ToList();
-            foreach (var shape in shapes)
-            {
-                result.Add(new ShapeInfo(shape.FullName, shape.Name, shape.GetConstructors()));
-            }
 
-            return result;
+            return shapes.Select(shape => new ShapeInfo(shape.FullName, shape.Name, shape.GetConstructors())).ToList();
         }
     }
 }

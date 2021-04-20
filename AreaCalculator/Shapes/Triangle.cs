@@ -18,13 +18,12 @@ namespace AreaCalculator.Shapes
         {
             if (A + B < C || B + C < A || C + A < B)
             {
-                throw new InvalidOperationException("Given side lengths can not form a valid triangle");
+                throw new InvalidOperationException("Given sides can not form a valid triangle");
             }
         }
         public double Area()
         {
-            // half of perimeter
-            var hp = (A + B + C) / 2;
+            var hp = (A + B + C) / 2; // half of perimeter
             return Math.Sqrt(hp * (hp - A) * (hp - B) * (hp - C));
         }
     }

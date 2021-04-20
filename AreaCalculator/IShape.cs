@@ -1,15 +1,15 @@
-using System.Reflection;
-using static System.Reflection.BindingFlags;
-
 namespace AreaCalculator
 {
     public interface IShape
     {
-        public string Description() => "The shape has no special description";
+        public string Description()
+        {
+            return "The shape has no special description";
+        }
 
         public ShapeInfo Info()
         {
-            return new ShapeInfo(
+            return new(
                 GetType().FullName,
                 GetType().Name,
                 GetType().GetConstructors()

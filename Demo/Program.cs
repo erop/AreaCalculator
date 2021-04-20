@@ -21,14 +21,61 @@ namespace Demo
 
             DisplayGreeting();
             DisplayShapesAvailable(shapes);
-            if (!AskForProceeding())
+            if (!WantToProceed())
             {
                 return;
             }
 
-            ShapeInfo chosenShape = ChooseShape(shapes);
-            // CalculateAreaForChosenShape(chosenShape);
+            var shapeInfo = ChooseShape(shapes);
+            CalculateAreaForChosenShape(shapeInfo);
         }
+
+        private static void CalculateAreaForChosenShape(ShapeInfo chosenShape)
+        {
+            var shapeName = chosenShape.Name;
+            var ctorInfos = chosenShape.ConstructorInfos;
+            Console.WriteLine($"You choose {shapeName}");
+            Console.WriteLine($"There are {ctorInfos.Length} variant(s) of parameters of the {shapeName}");
+            // var ctorArgs = DisplayAndSelectConstructorArguments(ctorInfos);
+            IShape shape = InitializeShapeWithArguments(chosenShape.FullName, ctorArgs);
+            Console.WriteLine("Congratulations!!!");
+            Console.WriteLine($"The area of the {shapeName} equals to {Calculator.Area(shape)}");
+        }
+
+        private static IShape InitializeShapeWithArguments(string shapeFullName, object ctorArgs)
+        {
+            var shapeType = Type.GetType(shapeFullName);
+            if (null == shapeType)
+            {
+                throw new ArgumentException($"Could not determine the type of '{shapeFullName}'");
+            }
+
+            try
+            {
+                var shape = Activator.CreateInstance(shapeType, ctorArgs);
+                if (null == shape)
+                {
+                    throw new Exception($"Could not instantiate and object of type '{shapeFullName}'");
+                }
+
+                return (IShape) shape;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        // private static DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
+        // {
+        //     while (true)
+        //     {
+        //         foreach (var info in ctorInfos)
+        //         {
+        //         }
+        //     }
+        // }
 
         private static ShapeInfo ChooseShape(List<ShapeInfo> shapes)
         {
@@ -48,7 +95,7 @@ namespace Demo
             }
         }
 
-        private static bool AskForProceeding()
+        private static bool WantToProceed()
         {
             Console.WriteLine("Do you want to calculate the area of the shape? (y/n)");
             var keyInfo = Console.ReadKey();
@@ -63,7 +110,7 @@ namespace Demo
 
         private static void DisplayShapesAvailable(List<ShapeInfo> shapes)
         {
-            Console.WriteLine($"There are {shapes.Count} shape(s) available:");
+            Console.WriteLine($"\nThere are {shapes.Count} shape(s) available:");
             int counter = 0;
             foreach (var shape in shapes)
             {
