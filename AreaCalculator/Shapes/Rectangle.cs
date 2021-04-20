@@ -7,15 +7,14 @@ namespace AreaCalculator.Shapes
         private readonly double _sideA;
         private readonly double _sideB;
         private readonly bool _isSquare = false;
+        
         public Rectangle(double sideA, double sideB)
         {
             this._sideA = sideA;
             this._sideB = sideB;
         }
-        public Rectangle(double sideA)
+        public Rectangle(double sideA): this(sideA, sideA)
         {
-            _sideA = sideA;
-            _sideB = sideA; // second side is equal to first one
             _isSquare = true;
         }
         public string Description()
