@@ -4,23 +4,23 @@ namespace AreaCalculator.Shapes
 {
     public class Rectangle : IShape
     {
-        public readonly double SideA;
-        public readonly double SideB;
-        public readonly bool IsSquare = false;
+        private readonly double _sideA;
+        private readonly double _sideB;
+        private readonly bool _isSquare = false;
         public Rectangle(double sideA, double sideB)
         {
-            this.SideA = sideA;
-            this.SideB = sideB;
+            this._sideA = sideA;
+            this._sideB = sideB;
         }
         public Rectangle(double sideA)
         {
-            SideA = sideA;
-            SideB = sideA; // second side is equal to first one
-            IsSquare = true;
+            _sideA = sideA;
+            _sideB = sideA; // second side is equal to first one
+            _isSquare = true;
         }
         public string Description()
         {
-            if (IsSquare)
+            if (_isSquare)
             {
                 return "This rectangle is actually a square";
             }
@@ -29,7 +29,7 @@ namespace AreaCalculator.Shapes
         }
         public double Area()
         {
-            return SideA * SideB;
+            return _sideA * _sideB;
         }
     }
 }

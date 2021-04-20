@@ -4,27 +4,35 @@ namespace AreaCalculator.Shapes
 {
     public class Triangle : IShape
     {
-        public double A;
-        public double B;
-        public double C;
+        private readonly double _a;
+        private readonly double _b;
+        private readonly double _c;
         public Triangle(double a, double b, double c)
         {
-            A = a;
-            B = b;
-            C = c;
+            _a = a;
+            _b = b;
+            _c = c;
             GuardAgainstInvalid();
         }
+        public Triangle(double a, double b): this(a, a, b)
+        {
+        }
+        
+        public Triangle(double a): this(a, a)
+        {
+        }
+        
         private void GuardAgainstInvalid()
         {
-            if (A + B < C || B + C < A || C + A < B)
+            if (_a + _b < _c || _b + _c < _a || _c + _a < _b)
             {
                 throw new InvalidOperationException("Given sides can not form a valid triangle");
             }
         }
         public double Area()
         {
-            var hp = (A + B + C) / 2; // half of perimeter
-            return Math.Sqrt(hp * (hp - A) * (hp - B) * (hp - C));
+            var hp = (_a + _b + _c) / 2; // half of perimeter
+            return Math.Sqrt(hp * (hp - _a) * (hp - _b) * (hp - _c));
         }
     }
 }

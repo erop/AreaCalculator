@@ -36,12 +36,11 @@ namespace Demo
             Console.WriteLine($"The area of the {shapeName} equals to {Calculator.Area(shape)}");
         }
 
-        private static object DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
+        private static object[] DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
         {
-            throw new NotImplementedException();
         }
 
-        private static IShape InitializeShapeWithArguments(string shapeFullName, object ctorArgs)
+        private static IShape InitializeShapeWithArguments(string shapeFullName, object[] ctorArgs)
         {
             var shapeType = Type.GetType(shapeFullName);
             if (null == shapeType) throw new ArgumentException($"Could not determine the type of '{shapeFullName}'");
