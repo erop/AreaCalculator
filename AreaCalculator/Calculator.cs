@@ -6,12 +6,12 @@ namespace AreaCalculator
 {
     public class Calculator
     {
-        public double Area(IShape shape)
+        public static double Area(IShape shape)
         {
             return shape.Area();
         }
 
-        public List<ShapeInfo> AvailableShapes()
+        public static List<ShapeInfo> GetAvailableShapes()
         {
             var result = new List<ShapeInfo>();
             var shapes = AppDomain.CurrentDomain.GetAssemblies()
