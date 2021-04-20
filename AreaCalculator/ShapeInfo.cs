@@ -4,12 +4,11 @@ namespace AreaCalculator
 {
     public class ShapeInfo
     {
-        public ParameterInfo[] ParameterInfos { get; }
         public string Name { get; }
-
-        public ShapeInfo(string name, ParameterInfo[] parameterInfos)
+        public ConstructorInfo[] ConstructorInfos { get; }
+        public ShapeInfo(string name, ConstructorInfo[] ctors)
         {
-            this.ParameterInfos = parameterInfos;
+            this.ConstructorInfos = ctors;
             this.Name = name;
         }
     }

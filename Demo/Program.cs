@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AreaCalculator;
+using AreaCalculator.Shapes;
 
 namespace Demo
 {
@@ -8,16 +9,11 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            IShape shape = new Circle(5);
-            Console.WriteLine(shape.Info().Name);
-            var parameterInfos = shape.Info().ParameterInfos;
-            if (parameterInfos?.Length > 0)
+            var calculator = new Calculator();
+            var availableShapes = calculator.AvailableShapes();
+            foreach (var shape in availableShapes)
             {
-                foreach (var param in parameterInfos)
-                {
-                    Console.WriteLine(param.Name);
-                    Console.WriteLine(param.ParameterType);
-                }
+                Console.WriteLine(shape.Name);
             }
         }
     }

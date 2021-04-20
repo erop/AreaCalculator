@@ -1,6 +1,6 @@
 using System;
 
-namespace AreaCalculator
+namespace AreaCalculator.Shapes
 {
     public class Circle : IShape
     {

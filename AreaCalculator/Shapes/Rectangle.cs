@@ -1,12 +1,12 @@
 using System;
 
-namespace AreaCalculator
+namespace AreaCalculator.Shapes
 {
     public class Rectangle : IShape
     {
-        public readonly bool IsSquare = false;
-        public readonly double SideA;
-        public readonly double SideB;
+        public bool IsSquare = false;
+        public double SideA;
+        public double SideB;
 
         public Rectangle(double sideA, double sideB)
         {
