@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading;
 using AreaCalculator;
 
 namespace Demo
@@ -39,12 +42,50 @@ namespace Demo
         private static object[] DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
         {
             var objects = Array.Empty<object>();
-            int counter = 0;
-            foreach (var ctorInfo in ctorInfos)
+            while (true)
             {
-                var ctorParams = ctorInfo.GetParameters();
-                foreach (var ctorParam in ctorParams)
+                ConstructorInfo ctorInfo = ChooseConstructor(ctorInfos);
+                Console.WriteLine("FINISH!");
+
+                // int counter = 0;
+                // foreach (var ctorInfo in ctorInfos)
+                // {
+                //     var ctorParams = ctorInfo.GetParameters();
+                //     foreach (var ctorParam in ctorParams)
+                //     {
+                //     }
+                // }
+            }
+        }
+
+        private static ConstructorInfo ChooseConstructor(ConstructorInfo[] ctorInfos)
+        {
+            var ctorInfosLength = ctorInfos.Length;
+            while (true)
+            {
+                Console.WriteLine($"There {ctorInfosLength} constructor(s) of chosen shape:");
+                for (int i = 0; i < ctorInfosLength; i++)
                 {
+                    var ctorInfo = ctorInfos[i];
+                    var parameterInfos = ctorInfo.GetParameters();
+                    var sb = new StringBuilder();
+                    foreach (var param in parameterInfos)
+                    {
+                        sb.Append($"{param.ParameterType} {param.Name}, ");
+                    }
+
+                    Console.WriteLine($"{i + 1} {sb.ToString().TrimEnd(new char[] {',', ' '})}");
+                }
+
+                Console.WriteLine("Which one you choose?");
+                var choice = Convert.ToInt16(Console.ReadLine());
+                try
+                {
+                    return ctorInfos[choice - 1];
+                }
+                catch (Exception e)
+                {
+                    continue;
                 }
             }
         }
