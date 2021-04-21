@@ -70,6 +70,11 @@ namespace Demo
                     Console.WriteLine($"{i + 1} {sb.ToString().TrimEnd(',', ' ')}");
                 }
 
+                if (1 == ctorInfos.Length)
+                {
+                    return ctorInfos[0];
+                }
+
                 Console.WriteLine("Which one you choose?");
                 var choice = Convert.ToInt16(Console.ReadLine());
                 try
