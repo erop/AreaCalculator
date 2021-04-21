@@ -33,29 +33,39 @@ namespace Demo
             var ctorInfos = chosenShape.ConstructorInfos;
             Console.WriteLine($"You choose {shapeName}");
             Console.WriteLine($"There are {ctorInfos.Length} variant(s) of parameters of the {shapeName}");
-            var ctorArgs = DisplayAndSelectConstructorArguments(ctorInfos);
-            var shape = InitializeShapeWithArguments(chosenShape.FullName, ctorArgs);
+            // var ctorArgs = DisplayAndSelectConstructorArguments(ctorInfos);
+            var ctorInfo = ChooseConstructor(ctorInfos);
+            var ctorArgs = BuildConstructorArguments(ctorInfo);
+            var s = ctorInfo.Invoke(ctorArgs);
+            var shape = (IShape) s;
+            // InitializeShapeWithArguments(chosenShape.FullName, ctorArgs);
             Console.WriteLine("Congratulations!!!");
             Console.WriteLine($"The area of the {shapeName} equals to {Calculator.Area(shape)}");
         }
 
-        private static object[] DisplayAndSelectConstructorArguments(ConstructorInfo[] ctorInfos)
+        private static object[] BuildConstructorArguments(ConstructorInfo ctorInfo)
         {
-            var objects = Array.Empty<object>();
-            while (true)
+            var list = new List<object>();
+            foreach (var param in ctorInfo.GetParameters())
             {
-                ConstructorInfo ctorInfo = ChooseConstructor(ctorInfos);
-                Console.WriteLine("FINISH!");
+                var paramType = param.ParameterType;
+                Console.WriteLine($"Enter the value of type '{paramType}'");
+                var entered = Console.ReadLine();
+                if (null == entered)
+                {
+                    throw new ArgumentException($"Could not get a string from console");
+                }
+                var value = Convert.ChangeType(entered, paramType);
+                if (null == value)
+                {
+                    throw new ArgumentException(
+                        $"Could not convert provided string '{entered}' to value of type {paramType}");
+                }
 
-                // int counter = 0;
-                // foreach (var ctorInfo in ctorInfos)
-                // {
-                //     var ctorParams = ctorInfo.GetParameters();
-                //     foreach (var ctorParam in ctorParams)
-                //     {
-                //     }
-                // }
+                list.Add(value);
             }
+
+            return list.ToArray();
         }
 
         private static ConstructorInfo ChooseConstructor(ConstructorInfo[] ctorInfos)
@@ -63,7 +73,6 @@ namespace Demo
             var ctorInfosLength = ctorInfos.Length;
             while (true)
             {
-                Console.WriteLine($"There {ctorInfosLength} constructor(s) of chosen shape:");
                 for (int i = 0; i < ctorInfosLength; i++)
                 {
                     var ctorInfo = ctorInfos[i];
@@ -83,9 +92,9 @@ namespace Demo
                 {
                     return ctorInfos[choice - 1];
                 }
-                catch (Exception e)
+                catch (ArgumentOutOfRangeException e)
                 {
-                    continue;
+                    // ignored
                 }
             }
         }
