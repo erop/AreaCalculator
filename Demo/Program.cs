@@ -17,10 +17,20 @@ namespace Demo
             if (!WantToProceed()) return;
 
             var shapeInfo = ChooseShape(shapes);
-            CalculateAreaForChosenShape(shapeInfo);
+            try
+            {
+                var area = CalculateAreaForChosenShape(shapeInfo);
+                Console.WriteLine("Congratulations!!!");
+                Console.WriteLine($"The area of the {shapeInfo.Name} equals to {area}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Sorry, impossible to calculate area of {shapeInfo.Name} with data provided ");
+                Console.WriteLine(e.Message);
+            }
         }
 
-        private static void CalculateAreaForChosenShape(ShapeInfo chosenShape)
+        private static double CalculateAreaForChosenShape(ShapeInfo chosenShape)
         {
             var shapeName = chosenShape.Name;
             var ctorInfos = chosenShape.ConstructorInfos;
