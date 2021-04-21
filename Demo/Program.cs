@@ -81,7 +81,7 @@ namespace Demo
                 {
                     return ctorInfos[choice - 1];
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (IndexOutOfRangeException e)
                 {
                     // ignored
                 }
@@ -99,7 +99,7 @@ namespace Demo
                 {
                     return shapes[shapeNumber - 1];
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (IndexOutOfRangeException e)
                 {
                 }
             }
